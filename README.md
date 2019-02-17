@@ -33,6 +33,18 @@
 4. [벌집](https://www.acmicpc.net/problem/2292)
 5. [괄호의 값](https://www.acmicpc.net/problem/2504)
 
+### 4주차
+
+설 연휴
+
+### 5주차
+1. [열 개씩 끊어 출력하기](https://www.acmicpc.net/problem/11721)
+2. [직사각형에서 탈출](https://www.acmicpc.net/problem/1085)
+3. [분수찾기](https://www.acmicpc.net/problem/1193)
+4. [파도반 수열](https://www.acmicpc.net/problem/9461)
+5. [물통](https://www.acmicpc.net/problem/2251)
+
+
 ## 장소
 ```
 강남역 근처 스터디룸
