@@ -1,4 +1,4 @@
-package com.pakpark.week6;
+package week6;
 
 import java.util.HashMap;
 import java.util.Map;

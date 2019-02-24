@@ -1,4 +1,4 @@
-package com.pakpark.week5;
+package week5;
 
 import java.util.*;
 

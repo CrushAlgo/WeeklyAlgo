@@ -1,4 +1,4 @@
-package com.pakpark.Third;
+package week3;
 
 import java.util.Scanner;
 

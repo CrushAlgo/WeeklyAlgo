@@ -1,4 +1,4 @@
-package com.pakpark.First;
+package week1;
 
 import java.util.Random;
 import java.util.Scanner;
