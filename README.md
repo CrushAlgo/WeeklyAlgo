@@ -44,6 +44,19 @@
 4. [파도반 수열](https://www.acmicpc.net/problem/9461)
 5. [물통](https://www.acmicpc.net/problem/2251)
 
+### 6주차
+1. [소트인사이드](https://www.acmicpc.net/problem/1427)
+2. [숫자의 개수](https://www.acmicpc.net/problem/2577)
+3. [단어 정렬](https://www.acmicpc.net/problem/1181)
+4. [일곱 난쟁이](https://www.acmicpc.net/problem/2309)
+5. [AC](https://www.acmicpc.net/problem/5430)
+
+### 7주차
+1. [지능형 기차](https://www.acmicpc.net/problem/2455)
+2. [분해합](https://www.acmicpc.net/problem/2231)
+3. [토너먼트](https://www.acmicpc.net/problem/1057)
+4. [괄호](https://www.acmicpc.net/problem/9012)
+5. [단절점](https://www.acmicpc.net/problem/11266)
 
 ## 장소
 ```
