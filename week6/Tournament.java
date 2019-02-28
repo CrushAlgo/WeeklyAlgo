@@ -1,7 +1,5 @@
 package week6;
 
-import java.util.*;
-
 public class Tournament {
 
   public static void main(String[] args) {
