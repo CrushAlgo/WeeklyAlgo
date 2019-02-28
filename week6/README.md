@@ -33,6 +33,15 @@ https://www.acmicpc.net/problem/2455
 
 ***
 
+## BreakPoint (단절점)
+https://www.acmicpc.net/problem/11266
+
+~~~
+Comming soon
+~~~
+
+***
+
 ## DecompositionSum (분해합)
 https://www.acmicpc.net/problem/2231
 
