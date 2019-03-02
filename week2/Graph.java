@@ -1,4 +1,4 @@
-package com.pakpark.Second;
+package week2;
 
 import java.util.*;
 
