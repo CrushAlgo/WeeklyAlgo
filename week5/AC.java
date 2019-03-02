@@ -2,52 +2,52 @@ package week5;
 
 import java.util.*;
 
-  public class AC {
+public class AC {
 
-    public static void main(String[] args) {
-      Scanner scan = new Scanner(System.in);
+  public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
 
-      int testCase = scan.nextInt();
+    int testCase = scan.nextInt();
+    scan.nextLine();
+
+    String[] RDFunc = new String[testCase];
+    int[] arrSize = new int[testCase];
+    String[] strArr = new String[testCase];
+
+    for (int i = 0; i < testCase; i++) {
+      RDFunc[i] = scan.nextLine();
+      arrSize[i] = scan.nextInt();
       scan.nextLine();
+      strArr[i] = scan.nextLine().replaceAll("[^0-9]", "");
+    }
 
-      String[] RDFunc = new String[testCase];
-      int[] arrSize = new int[testCase];
-      String[] strArr = new String[testCase];
+    for (int i = 0; i < strArr.length; i++) {
+      //AC함수
+      String RD = RDFunc[i];
+      int RDFuncLength = RDFunc[i].length();
 
-      for (int i = 0; i < testCase; i++) {
-        RDFunc[i] = scan.nextLine();
-        arrSize[i] = scan.nextInt();
-        scan.nextLine();
-        strArr[i] = scan.nextLine().replaceAll("[^0-9]", "");
-      }
+      //배열
+      String arr = strArr[i];
 
-      for (int i = 0; i < strArr.length; i++) {
-        //AC함수
-        String RD = RDFunc[i];
-        int RDFuncLength = RDFunc[i].length();
+      for (int j = 0; j < RDFuncLength; j++) {
+        char func = RD.charAt(j);
 
-        //배열
-        String arr = strArr[i];
-
-        for (int j = 0; j < RDFuncLength; j++) {
-          char func = RD.charAt(j);
-
-          if (arr.isEmpty()) {
-            System.out.println("error");
-            break;
-          }
-
-          if (func == 'R') {
-            arr = (new StringBuffer(arr)).reverse().toString();
-          } else {
-            arr = arr.substring(1, arr.length());
-          }
+        if (arr.isEmpty()) {
+          System.out.println("error");
+          break;
         }
 
-        System.out.println(arr.split("").toString());
+        if (func == 'R') {
+          arr = (new StringBuffer(arr)).reverse().toString();
+        } else {
+          arr = arr.substring(1, arr.length());
+        }
       }
 
+      System.out.println(arr.split("").toString());
     }
+
+  }
 
   private static int[] acFunc(String functions, String array) {
     //R, 뒤집기 / D, 첫번째 인덱스 삭제

@@ -52,40 +52,81 @@ public class BreakPoint {
       }
     }
 
-    Iterator pointIter = graph.keySet().iterator();
-    int start = Integer.parseInt(pointIter.next().toString());
-    int next = Integer.parseInt(pointIter.next().toString());
+    for (Integer iter : graph.keySet()) {
+      System.out.println(iter + " : " + Arrays.toString(graph.get(iter).toArray()));
+    }
 
-    graph.remove(start);
-
-    int searchResult = search(next, graph);
-
-    if(searchResult == 0) System.out.println("완전연결");
-    else System.out.println("간선 없다");
-
-//    for (Integer iter : graph.keySet()) {
-//      System.out.println(iter + " : " + Arrays.toString(graph.get(iter).toArray()));
-//    }
+    for (Integer iter : graph.keySet()) {
+      Map<Integer, List<Integer>> tempMap = removePoint(iter, graph);
+      System.out.format("삭제 된 point: %d, 그래프: %s \n", iter, search2(tempMap));
+      System.out.println("삭제 후 main 그래프 상태: " + tempMap.keySet());
+      System.out.println();
+    }
   }
 
-  public static int search(int point, Map<Integer, List<Integer>> graph) {
-    List<Integer> pointEdge = graph.get(point);
+  /**
+   * queue를 이용한 탐색.
+   * - 시작점을 잡고, 시작점에 연결된 간선 만큼의 지점들을 넣늗다.
+   * - 그 지점에 연결된 또 다른 지점들을 넣으면서 검사.
+   */
+  public static Set<Integer> search2(Map<Integer, List<Integer>> graph) {
+    //탐색한 정점들 모아 놓은 리스트.
+    Set<Integer> pointSet = new HashSet<>();
 
-    //point 에 간선이 없을 때
-    if(pointEdge.isEmpty()) return -1;
+    //첫번쨰 정점.
+    int start = graph.keySet().iterator().next();
 
-    int nextPoint = 0;
-    for(int i=0; i<pointEdge.size(); i++) {
-      int p = pointEdge.get(i);
+    //Queue, 정점을 시작으로 형제를 먼저 탐색.
+    Queue<Integer> queue = new LinkedList<>();
 
-      if(list.contains(p)) continue;
-      else {
-        nextPoint = p;
-        list.add(p);
-        return search(nextPoint, graph);
+    queue.add(start);
+
+    //탐색, (BFS)
+    while (!queue.isEmpty()) {
+      int point = queue.poll();
+      pointSet.add(point);
+
+      List<Integer> brothers = graph.get(point);
+      for (int broIter : brothers) {
+        if (!pointSet.contains(broIter)) {
+          queue.add(broIter);
+          pointSet.add(broIter);
+        }
       }
     }
 
-    return 0;
+    return pointSet;
+  }
+
+  /**
+   * Map copy, java 에서는 Deep Copy 가 지원 되지 않으므로 새로운 객체를 생성해서 하나씩 복사해야한다.
+   * https://offbyone.tistory.com/370
+   * @param point
+   * @param graph
+   * @return
+   */
+  public static Map<Integer, List<Integer>> removePoint(int point, Map<Integer, List<Integer>> graph) {
+    Map<Integer, List<Integer>> tempGraph = new HashMap<>();
+    for(Map.Entry<Integer, List<Integer>> entry : graph.entrySet()) {
+      tempGraph.put(entry.getKey(), entry.getValue());
+    }
+
+    System.out.format("복사한 graph: %s \n", Arrays.toString(tempGraph.entrySet().toArray()));
+
+    tempGraph.remove(point);
+
+    for (int mapIter : tempGraph.keySet()) {
+      List<Integer> pointList = tempGraph.get(mapIter);
+      if (pointList.contains(point)) {
+        System.out.format("delete: %d, boolean: %s \n", point, pointList.remove(point));
+      }
+    }
+
+    System.out.println("삭제 포인트: " + point);
+    for (Integer iter : tempGraph.keySet()) {
+      System.out.println(iter + " : " + Arrays.toString(tempGraph.get(iter).toArray()));
+    }
+
+    return tempGraph;
   }
 }
