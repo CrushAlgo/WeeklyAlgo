@@ -58,6 +58,13 @@
 4. [괄호](https://www.acmicpc.net/problem/9012)
 5. [단절점](https://www.acmicpc.net/problem/11266)
 
+### 8주차
+1. [2007년](https://www.acmicpc.net/problem/1924)
+2. [문자열반복](https://www.acmicpc.net/problem/2675)
+3. [계단오르기](https://www.acmicpc.net/problem/2579)
+4. [이진검색트리](https://www.acmicpc.net/problem/5639)
+5. [안전영역](https://www.acmicpc.net/problem/2468)
+
 ## 장소
 ```
 강남역 근처 스터디룸
