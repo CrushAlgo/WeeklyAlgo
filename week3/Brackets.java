@@ -12,42 +12,85 @@ public class Brackets {
   public static void main(String args[]) {
     Scanner scan = new Scanner(System.in);
 
-    String input = scan.nextLine();
-    bracketsTest(input);
+//    String input = scan.nextLine();
+    String test = "(()[[]])([])";
+    solution(test);
 
   }
 
   // '(()[[]])([])' -> '(()[[]])' (2+3*3)*2
 
-  public static String[] brackets = {"(", ")", "[", "]"};
+  public static char[] brackets = {'(', ')', '[', ']'};
 
-  public static void bracketsTest(String input) {
-    int length = input.length();
-    String[] bracketArr = new String[length];
-    bracketArr = input.split("");
+  public static void solution(String input) {
+    Stack<Character> stack = new Stack<>();
+    Stack<Character> count = new Stack<>();
 
-    System.out.println(Arrays.toString(bracketArr));
+    boolean openFlag = false;
+    boolean closeFlag = false;
 
-    Stack<String> braStack = new Stack<>();
-
-    // ")", "]" 닫는 괄호로 시작할 경우, 올바르지 못한 괄호열(?)
-
-    // 올바른 괄호열 인지 부터 파악.
-    for (int i = 0; i < length; i++) {
-      if (i == 0) {
-        if (bracketArr[i] == brackets[1] || bracketArr[i] == brackets[3]) {
-          break;
-        }
+    for (int i = 0; i < input.length(); i++) {
+      if (i == 0 && (input.charAt(i) == ')' || input.charAt(i) == ']')) {
+        return;
       } else {
-        // push 하는 경우, 여는 괄호 인 경우, 혹은 스텍 비어있는 경우.
-        if(braStack.empty() || brackets[0] == bracketArr[i] || brackets[2] == bracketArr[i]) {
-          braStack.push(bracketArr[i]);
+        if ((input.charAt(i) == brackets[0]) ||
+                (input.charAt(i) == brackets[2])) {
+          openFlag = true;
+        } else {
+          openFlag = false;
         }
-        // pop 하는 경우, 닫는 괄호 인 경우, 혹은 마지막 문자일 경우.
-        else{
 
+        switch (input.charAt(i)) {
+          case '(':
+            stack.push(brackets[0]);
+            if(i > 0) {
+              //닫는 괄호 다음에 여는 괄호 들어왔을 때.
+              if(closeFlag) {
+                count.push('+');
+                closeFlag = false;
+              } else {
+                //여는 괄호 다음에 여는 괄호 들어왔을 때.
+                count.push('*');
+              }
+            }
+
+            count.push('2');
+
+            break;
+          case '[':
+            stack.push(brackets[2]);
+            if(i > 0) {
+              //닫는 괄호 다음에 여는 괄호 들어왔을 때.
+              if(closeFlag) {
+                count.push('+');
+                closeFlag = false;
+              } else {
+                count.push('*');
+              }
+            }
+
+            count.push('3');
+
+            break;
+          case ')':
+            stack.pop();
+            closeFlag = true;
+
+            break;
+          case ']':
+            stack.pop();
+            closeFlag = true;
+
+            break;
         }
       }
     }
+
+    char[] result = new char[count.capacity()];
+    for(int i=0; i<count.capacity(); i++) {
+
+    }
+    System.out.println(Arrays.toString(count.toArray()));
   }
+
 }
