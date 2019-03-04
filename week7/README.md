@@ -26,9 +26,8 @@ ___List Initializing (java)___
 `Collections.addAll(list, 'obj1', 'obj2', ...);`
 > Collections 사용
 
-`List<String> streamList = Stream.of("Buenos Aires", "Córdoba", "La Plata").collect(Collectors.toList())`;
-
-`ArrayList<String> places = Stream.of("Buenos Aires", "Córdoba", "La Plata").collect(Collectors.toCollection(ArrayList::new));`
+`List<Object> streamList = Stream.of('obj1', 'obj2', ...).collect(Collectors.toList());`  
+`ArrayList<Object> places = Stream.of('obj1', 'obj2', ...).collect(Collectors.toCollection(ArrayList::new));`
 > Stream 사용
 
 분류
