@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * '트리' 자료구조, 자료 참고하고 짠 이진탐색 트리.
+ */
 public class BinarySearchTree2 {
 
   public static void main(String[] args) throws IOException {
@@ -17,7 +20,6 @@ public class BinarySearchTree2 {
 
     treeNode.postOrder(treeNode);
   }
-
 }
 
 class TreeNode {
@@ -41,7 +43,7 @@ class TreeNode {
 
   /**
    * # 트리 탐색 메소드
-   * 'key'에 해당하는 노드 찾는 메소드, 찾으면 해당 노드를 반환한다.
+   * - 'key'에 해당하는 노드 찾는 메소드, 찾으면 해당 노드를 반환한다.
    * - 검색 메소드를 먼저 구현해야 하는데, 숫자로 들어오는 값에 대해, 이진 트리에 어느 곳에 위치 할 수 있는지 일단 검색을 한 후에 노드를 추가해야 한다.
    *
    * @param treeNode
@@ -58,6 +60,13 @@ class TreeNode {
     else return searchBST(treeNode.rightNode, key);
   }
 
+  /**
+   * # 노드 삽입 메소드
+   * - 검색을 통해 비어있는지 확인 후, 부모 노드를 통해 값에 맞게 좌,우로 노드 주소 연결.
+   * @param root
+   * @param key
+   * @return
+   */
   public TreeNode insertBST(TreeNode root, int key) {
     TreeNode tempNode = root;
     TreeNode preNode = tempNode;
@@ -82,7 +91,11 @@ class TreeNode {
     return root;
   }
 
-
+  /**
+   * # 트리 순회 출력 메소드
+   * - 트리 말단 까지 내려가서 검색해 올라온다.
+   * @param treeNode
+   */
   public void postOrder(TreeNode treeNode) {
     if (treeNode != null) {
       postOrder(treeNode.leftNode);

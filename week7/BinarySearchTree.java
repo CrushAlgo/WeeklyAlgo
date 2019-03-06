@@ -3,6 +3,9 @@ package week7;
 import java.io.*;
 import java.util.*;
 
+/**
+ * '트리' 자료구조, 자료 안보고 쌩짜로 짠 이진 검색 트리.
+ */
 public class BinarySearchTree {
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
