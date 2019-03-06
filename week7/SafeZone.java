@@ -34,7 +34,7 @@ public class SafeZone {
   }
 
   public static int solution(int N, int[][] area, int min, int max) {
-    int result = 1;
+    int result = 1; //비가 오지 않은 경우 모든 구역이 '안전 구역'으로 묶임
 
     boolean[][] safeZone = new boolean[N][N];
     for (int i = min; i <= max; i++) {
