@@ -2,9 +2,6 @@ package week8;
 
 import java.util.Scanner;
 
-/**
- * 같은 행, 같은 열이 지워지면 빙고, 대각선은 2개.
- */
 public class Bingo {
 
   public static int SIZE = 5;
