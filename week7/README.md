@@ -67,7 +67,7 @@ ___List Initializing (java)___
 
 ***
 
-## ClimbingStair (계단 오르기), ~~FAIL, runtime error~~
+## ClimbingStair (계단 오르기), ~~FAIL runtime error~~
 https://www.acmicpc.net/problem/2579
 
 >동적 계획법 (DP)

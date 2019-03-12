@@ -46,7 +46,7 @@ public class BlackJack {
           int sum = (firPick + secPick + thiPick);
           int diff = (M - sum);
 
-          if(sum <= M && (M - sum) < (M - result)) result = sum;
+          if (sum <= M && (M - sum) < (M - result)) result = sum;
         }
       }
     }

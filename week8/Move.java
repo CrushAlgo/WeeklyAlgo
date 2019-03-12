@@ -61,7 +61,7 @@ public class Move {
     int S = 0;
     for (int i = 0; i < N; i++) {           //고정
       int[] temp = xMatrix[i];
-      for(int k = 0; k < N; k++) {          //행
+      for (int k = 0; k < N; k++) {          //행
         for (int j = 0; j < N; j++) {       //열
           S += (temp[j] * yMatrix[j][k]);
         }
