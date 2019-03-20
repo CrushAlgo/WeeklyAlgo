@@ -1,25 +1,37 @@
 package week9;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CompititionOrIntern {
 
   public static void main(String[] args) {
-    int result = 0;
+    try (Scanner scan = new Scanner(System.in)) {
+      String[] input = scan.nextLine().split(" ");
 
-    Scanner scan = new Scanner(System.in);
+      int[] tc = strToInt(input);
+      System.out.println(solution1(tc));
+    }
+  }
 
-    String[] input = scan.nextLine().split(" ");
-    int female = Integer.parseInt(input[0]);
-    int male = Integer.parseInt(input[1]);
-    int intern = Integer.parseInt(input[2]);
+  public static int solution1(int[] input) {
+    int female = input[0];
+    int male = input[1];
+    int intern = input[2];
 
-    //(여성 수 / 2) = 팀 구성인원
-    int feTeam = (female / 2);
-    int leftFemale = (female % 2);
+    int team = 0;
+    while (female >= 2 && male >= 1) {
+      female -= 2;
+      male -= 1;
 
-    // (여성 팀 -  남성 팀) = 남은 남성
-    int leftMale = Math.abs(feTeam - male);
+      if((female + male) < intern) break;
+      team++;
+    }
 
+    return team;
+  }
+
+  public static int[] strToInt(String[] strArr) {
+    return Arrays.asList(strArr).stream().mapToInt(Integer::parseInt).toArray();
   }
 }
