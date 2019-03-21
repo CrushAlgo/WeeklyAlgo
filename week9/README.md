@@ -69,7 +69,7 @@ String[] strArr = {"123", "456", "789"};
 ~~~
 
 
-_~ java 8_
+_java 8, 이전_
 ~~~
 for(int i=0; i<strArr.length; i++) {
     intArr[i] = Integer.parseInt(strArr[i]);
