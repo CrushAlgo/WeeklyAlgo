@@ -3,6 +3,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * CLASS CAKEDELIVERY {
+ *   MAIN()
+ *   SOLUTION()
+ *
+ *   STATIC CLASS POINT{
+ *     METHODS() ...
+ *   }
+ * }
+ */
 public class CakeDelivery {
   public static void main(String[] args) {
     try (Scanner scan = new Scanner(System.in)) {
