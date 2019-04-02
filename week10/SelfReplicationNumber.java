@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/*
+int 로 비교한다. 자릿수로 나눠서.
+ */
 public class SelfReplicationNumber {
 
   public static void main(String[] args) throws IOException {

@@ -28,7 +28,6 @@ public class Graph2 {
 
     Graph graph = new Graph(vertex, trunk);
     graph.setGraph(vertexes);
-    graph.view();
 
     solution(graph, start - 1);
 
@@ -39,7 +38,11 @@ public class Graph2 {
     Graph g = graph;
     Point point = g.getStart(start);
 
-//    g.dfs(point);
+    g.dfs(point);
+    g.resetTemp();
+    System.out.println();
+
+    g.bfs(point);
   }
 
   static class Point {
@@ -48,6 +51,14 @@ public class Graph2 {
     public Point(int x, int y) {
       this.x = x;
       this.y = y;
+    }
+
+    @Override
+    public String toString() {
+      return "Point{" +
+              "x=" + x +
+              ", y=" + y +
+              '}';
     }
   }
 
@@ -73,12 +84,12 @@ public class Graph2 {
       }
     }
 
-    // 시작점 찾
+    // 시작점 찾기
     public Point getStart(int start) {
       Point point = null;
 
-      for(int i = 0; i < this.vertex; i++) {
-        if(map[start][i] == 1) {
+      for (int i = 0; i < this.vertex; i++) {
+        if (map[start][i] == 1) {
           point = new Point(start, i);
 
           temp[start][i] = 1;
@@ -91,43 +102,100 @@ public class Graph2 {
       return point;
     }
 
-    /*
-    public List<Point> dfs(Point point) {
+    public void dfs(Point point) {
       Stack<Point> stack = new Stack<>();
       stack.push(point);
 
+      Set<Integer> pointSet = new HashSet<>();
+
       boolean flag = false;
+      boolean popFlag = false;
 
       while (!stack.empty()) {
+        flag = false;
+
         point = stack.peek();
+        if (popFlag) {
+          stack.pop();
+          popFlag = false;
+        }
+        pointSet.add(point.x);
 
         int x = point.y;
         int y = point.x;
 
         for (int i = 0; i < this.vertex; i++) {
           if (map[x][i] == 1 && temp[x][i] != 1) {
+            if (pointSet.contains(x)) popFlag = true;
+
             stack.push(new Point(x, i));
 
             temp[x][i] = 1;
             temp[i][x] = 1;
 
+            flag = true;
+
             break;
           }
         }
+
+        if (!flag) break;
       }
 
-      for(Integer iter :  result){
-        System.out.print(iter + " ");
+      int[] result = new int[this.vertex];
+      int idx = 0;
+      while (!stack.empty()) {
+        Point p = stack.pop();
+        result[idx++] = p.x;
       }
 
-      return pointList;
+      for (int i = result.length - 1; i >= 0; i--) {
+        System.out.print(result[i] + 1 + " ");
+      }
     }
-    */
 
-    public void view() {
+    public void bfs(Point point) {
+      Queue<Point> queue = new LinkedList<>();
+      queue.add(point);
+
+      boolean flag = false;
+      int count = 0;
+      while (!queue.isEmpty()) {
+        flag = false;
+
+        Point p = queue.poll();
+
+        int x = p.x;
+        int y = p.y;
+
+
+        for (int i = 0; i < this.vertex; i++) {
+          if (map[x][i] == 1 && temp[x][i] != 1) {
+            queue.add(new Point(i, x));
+
+            flag = true;
+
+            temp[x][i] = 1;
+            temp[i][x] = 1;
+
+          }
+        }
+
+        if(count < this.vertex) {
+          System.out.print((x + 1) + " ");
+          count++;
+        }
+      }
+    }
+
+    public void resetTemp() {
+      this.temp = new int[this.vertex][this.vertex];
+    }
+
+    public void view(int[][] map) {
       for (int i = 0; i < this.vertex; i++) {
         for (int j = 0; j < this.vertex; j++) {
-          System.out.print(this.map[i][j] + " ");
+          System.out.print(map[i][j] + " ");
         }
         System.out.println();
       }
