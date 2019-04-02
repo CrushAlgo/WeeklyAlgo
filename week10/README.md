@@ -57,7 +57,7 @@ https://www.acmicpc.net/problem/1212
 ~~~
 
 Tip  
-#####_Scanner vs BufferedReader_
+##### _Scanner vs BufferedReader_ #####
 
 >Scanner
 >> 1. 'java1.5' 부터 도입된 콘솔 입력 클래스.
