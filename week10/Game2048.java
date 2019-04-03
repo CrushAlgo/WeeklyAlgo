@@ -14,6 +14,11 @@ import java.util.Queue;
 8 8 8
 
 3
+2 2 2
+4 4 4
+8 8 8
+
+3
 0 2 0
 0 0 2
 2 2 0
@@ -29,6 +34,33 @@ import java.util.Queue;
 2 2 2 0
 0 4 2 2
 2 8 2 8
+
+5
+2 2 4 8 16
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+16 8 4 2 2
+
+5
+16 0 0 0 0
+8 0 0 0 0
+4 0 0 0 0
+2 0 0 0 0
+2 0 0 0 0
+
+5
+2 2 4 8 16
+2 0 0 0 8
+4 0 0 0 4
+8 0 0 0 2
+16 8 4 2 2
+ */
+
+/*
+풀이
+: 맵을 4방면으로 돌려보고, 큰 값을 갖는 맵을 다시 돌린다. 최종적으로 남은 맵의 최대값을 출력한다.
+: 5번이라는 카운트를 어떻게 줄 것이냐.
  */
 public class Game2048 {
 
@@ -45,193 +77,251 @@ public class Game2048 {
               .toArray();
     }
 
-    solution(N, board);
+    int max = solution(N, board);
+
+    System.out.println(max);
   }
 
-  public static void solution(int N, int[][] board) {
-    BoardGame bg = new BoardGame(N);
+  static int solution(int N, int[][] board) {
+    int result = 0;
 
-    Queue<int[][]> queue = new LinkedList<>();
-    queue.add(board);
+    BoardGame bg = new BoardGame(N, 0);
+    bg.setBoard(board);
 
-    int[] boardCnt = new int[4];  // up, down, left, right
+    Queue<BoardGame> queue = new LinkedList<>();
+    queue.add(bg);
+
+    int tempMax = 0;
     while (!queue.isEmpty()) {
-      int[][] temp = queue.poll();
+      BoardGame temp = queue.poll();    // 입력 받은 BG 객체를 꺼내온다.
 
-      int[][] up, down, left, right;
+      int[][] pollBoard = temp.getBoard();
+      int count = temp.getCount() + 1;
 
-      up = copyArr(temp);
-      down = copyArr(temp);
-      left = copyArr(temp);
-      right = copyArr(temp);
+      if (count > 5) break;
 
-      bg.down(down);
-      bg.up(up);
-      bg.left(left);
-      bg.right(right);
+      System.out.format("-----count : %d --- temp : %d \n", count, tempMax);
+      temp.view();
 
-      int max = Math.max(
-                  Math.max(bg.maxValue(up), bg.maxValue(down)),
-                  Math.max(bg.maxValue(left), bg.maxValue(right))
-                );
+      BoardGame up = new BoardGame(N, count);
+      BoardGame down = new BoardGame(N, count);
+      BoardGame left = new BoardGame(N, count);
+      BoardGame right = new BoardGame(N, count);  // 꺼내온 BG 객체에는 'board' 가 있고, 각 'up', 'down', ... 객체에 'board' 를 복사
 
-      System.out.println(max);
+      up.setBoard(pollBoard);
+      down.setBoard(pollBoard);
+      left.setBoard(pollBoard);
+      right.setBoard(pollBoard);
 
-      if (max == bg.maxValue(up)) queue.add(up);
-      if (max == bg.maxValue(down)) queue.add(down);
-      if (max == bg.maxValue(left)) queue.add(left);
-      if (max == bg.maxValue(right)) queue.add(right);
+      up.up2();
+      down.down2();
+      left.left2();
+      right.right2();
 
-      System.out.println(queue.size());
-      break;
+      System.out.println();
+      System.out.println("---up---");
+      up.view();
+
+      System.out.println("---down---");
+      down.view();
+
+      System.out.println("---left---");
+      left.view();
+
+      System.out.println("---right---");
+      right.view();
+
+      System.out.println();
+
+
+      int upMax = up.maxValue();
+      int downMax = down.maxValue();
+      int leftMax = left.maxValue();
+      int rightMax = right.maxValue();
+
+      if(tempMax < result) tempMax = result;
+
+      result = Math.max(
+              Math.max(upMax, downMax),
+              Math.max(leftMax, rightMax)
+      );
+
+      if (result == up.maxValue()) queue.add(up);
+      if (result == down.maxValue()) queue.add(down);
+      if (result == left.maxValue()) queue.add(left);
+      if (result == right.maxValue()) queue.add(right);
     }
-  }
 
-  public static int[][] copyArr(int[][] board) {
-    int row = board.length;     //행
-    int col = board[0].length;  //열
-
-    int[][] temp = new int[row][col];
-
-    for (int i = 0; i < board.length; i++) {
-      temp[i] = board[i].clone();
-    }
-
-    return temp;
+    return tempMax;
   }
 
   static class BoardGame {
     static int SIZE;
+    int[][] board;
 
-    public BoardGame(int N) {
+    int count;
+
+    public BoardGame(int N, int count) {
       this.SIZE = N;
+      this.count = count;
     }
 
-    public int[][] up(int[][] board) {
+    public int[][] getBoard() {
+      return this.board;
+    }
+
+    public void setBoard(int[][] board) {
+      int row = board.length;
+      int col = board[0].length;
+
+      this.board = new int[row][col];
+
+      for (int i = 0; i < row; i++) {
+        this.board[i] = board[i].clone();
+      }
+    }
+
+    public int getCount() {
+      return this.count;
+    }
+
+    public void setCount() {
+      this.count++;
+    }
+
+    public void up2() {
       boolean[][] check = new boolean[SIZE][SIZE];
 
-      /*
-      '0'을 만나면 쭉쭉 올라가게 한다. 한 열씩
-       */
-      for (int i = 0; i < SIZE; i++) {  // 열
-        for (int j = 0; j < SIZE; j++) {  // 행
-          if (board[j][i] == 0) continue;
+      for (int col = 0; col < SIZE; col++) {
+        for (int row = 0; row < SIZE; row++) {
+          int now = row;
+
+          if (board[now][col] == 0) continue;
           else {
-            int point = j;
-            int value = board[j][i];
+            int value = board[now][col];
 
-            while (point != 0) {
-              point--;
+            while (now > 0) {
+              now--;
 
-              if (board[point][i] == 0) {
-                board[point][i] = value;
-                board[point + 1][i] = 0;
-              } else if (board[point][i] == value && !check[point][i]) {
-                board[point][i] = (value * 2);
-                board[point + 1][i] = 0;
+              if (board[now][col] == value && !check[now][col]) {
+                board[now][col] = (value * 2);
+                board[now + 1][col] = 0;
 
-                //check
-                check[point][i] = true;
-              } else break;
+                check[now][col] = true;
+
+                value = (value * 2);
+              }
+
+              if (board[now][col] == 0) {
+                board[now][col] = value;
+                board[now + 1][col] = 0;
+              }
             }
           }
         }
       }
-
-      return board;
     }
 
-    public int[][] down(int[][] board) {
+    public void down2() {
       boolean[][] check = new boolean[SIZE][SIZE];
 
-      for (int i = 0; i < SIZE; i++) {    //행
-        for (int j = (SIZE - 1); j >= 0; j--) {  //열
-          if (board[j][i] == 0) continue;
+      for (int col = (SIZE - 1); col >= 0; col--) {
+        for (int row = (SIZE - 1); row >= 0; row--) {
+          int now = row;
+
+          if (board[now][col] == 0) continue;
           else {
-            int point = j;
-            int value = board[j][i];
+            int value = board[now][col];
 
-            while (point != (SIZE - 1)) {
-              point++;
+            while (now < (SIZE - 1)) {
+              now++;
 
-              if (board[point][i] == 0) {
-                board[point][i] = value;
-                board[point - 1][i] = 0;
-              } else if (board[point][i] == value && !check[point][i]) {
-                board[point][i] = (value * 2);
-                board[point - 1][i] = 0;
+              if (board[now][col] == value && !check[now][col]) {
+                board[now][col] = (value * 2);
+                board[now - 1][col] = 0;
 
-                check[point][i] = true;
-              } else break;
+                check[now][col] = true;
+
+                value = (value * 2);
+              }
+
+              if (board[now][col] == 0) {
+                board[now][col] = value;
+                board[now - 1][col] = 0;
+              }
             }
           }
         }
       }
-
-      return board;
     }
 
-    public int[][] left(int[][] board) {
+    public void left2() {
       boolean[][] check = new boolean[SIZE][SIZE];
 
-      for (int i = 0; i < SIZE; i++) {    //행
-        for (int j = 0; j < SIZE; j++) {  //열
-          if (board[i][j] == 0) continue;
+      for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
+          int now = col;
+
+          if (board[row][now] == 0) continue;
           else {
-            int point = j;
-            int value = board[i][j];
+            int value = board[row][now];
 
-            while (point != 0) {
-              point--;
+            while (now > 0) {
+              now--;
 
-              if (board[i][point] == 0) {
-                board[i][point] = value;
-                board[i][point + 1] = 0;
-              } else if (board[i][point] == value && !check[i][point]) {
-                board[i][point] = (value * 2);
-                board[i][point + 1] = 0;
+              if (board[row][now] == value && !check[row][now]) {
+                board[row][now] = (value * 2);
+                board[row][now + 1] = 0;
 
-                check[i][point] = true;
-              } else break;
+                check[row][now] = true;
+
+                value = (value * 2);
+              }
+
+              if (board[row][now] == 0) {
+                board[row][now] = value;
+                board[row][now + 1] = 0;
+              }
             }
           }
         }
       }
-
-      return board;
     }
 
-    public int[][] right(int[][] board) {
+    public void right2() {
       boolean[][] check = new boolean[SIZE][SIZE];
 
-      for (int i = 0; i < SIZE; i++) {
-        for (int j = (SIZE - 1); j >= 0; j--) {
-          if (board[i][j] == 0) continue;
+      for (int row = 0; row < SIZE; row++) {
+        for (int col = (SIZE - 1); col >= 0; col--) {
+          int now = col;
+
+          if (board[row][now] == 0) continue;
           else {
-            int point = j;
-            int value = board[i][j];
+            int value = board[row][now];
 
-            while (point != (SIZE - 1)) {
-              point++;
+            while (now < (SIZE - 1)) {
+              now++;
 
-              if (board[i][point] == 0) {
-                board[i][point] = value;
-                board[i][point - 1] = 0;
-              } else if (board[i][point] == value && !check[i][point]) {
-                board[i][point] = (value * 2);
-                board[i][point - 1] = 0;
+              if (board[row][now] == value && !check[row][now]) {
+                board[row][now] = (value * 2);
+                board[row][now - 1] = 0;
 
-                check[i][point] = true;
-              } else break;
+                check[row][now] = true;
+
+                value = (value * 2);
+              }
+
+              if (board[row][now] == 0) {
+                board[row][now] = value;
+                board[row][now - 1] = 0;
+              }
             }
           }
         }
       }
-
-      return board;
     }
 
-    public int maxValue(int[][] board) {
+    public int maxValue() {
       int max = 0;
 
       for (int i = 0; i < SIZE; i++) {
@@ -243,7 +333,7 @@ public class Game2048 {
       return max;
     }
 
-    public void view(int[][] board) {
+    public void view() {
       for (int i = 0; i < board.length; i++) {
         for (int j = 0; j < board[i].length; j++) {
           System.out.print(board[i][j] + " ");
