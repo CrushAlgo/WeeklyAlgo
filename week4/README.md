@@ -1,3 +1,24 @@
+## HarfWaveNumber (파도반 수열)
+https://www.acmicpc.net/problem/9461
+
+문제 요약
+> 링크 들어가서 보기.
+
+~~~
+계속 진행하다 보면 규칙성이 나온다.
+
+'N' 개의 파도반 수열을 만들었을 때, 배열을 'P' 라고 하자.
+구하려는 수는 'P(N)' 일 때, 'P(N) = (P(N - 5) + P(N - 1))' 이라는 수식이 나옴.
+(N > 5, 일 때)
+
+* N이 5 이하 일 때는 규칙성 없이, {1, 1, 1, 2, 2} 이다.
+~~~
+
+유형
+* DP
+
+***
+
 ## MinBoundary (직사각형에서 탈출)
 https://www.acmicpc.net/problem/1085
 
@@ -66,14 +87,5 @@ Comming soon
 
 알고리즘 분류
 * BFS
-
-***
-
-## - (파도반 수열)
-https://www.acmicpc.net/problem/9461
-
-~~~
-Comming soon
-~~~
 
 ***
